@@ -1,0 +1,1046 @@
+{
+  "version": "v1",
+  "root": [
+    {
+      "type": "te-log",
+      "content": [
+        {
+          "type": "te-log-meta",
+          "entity_model": {
+            "id": "16",
+            "name": "tx_burst_simple",
+            "entity": "Test",
+            "result": "PASSED",
+            "extended_properties": {
+              "tin": "12",
+              "hash": "65cdaeb0b5d0ae7a7552ca1957d8ecee"
+            }
+          },
+          "meta": {
+            "start": "00:06:57.421",
+            "end": "00:06:59.396",
+            "duration": "0:0:1.975",
+            "objective": "Transmit packets using tmpl from the TX queue",
+            "description": {
+              "text": "See page",
+              "url": "https://ts-factory.io/doc/dpdk-ethdev-ts/generated/rst/group_usecases-tx_burst_simple.html"
+            },
+            "parameters": [
+              {
+                "name": "env",
+                "value": "VAR.env.peer2peer"
+              },
+              {
+                "name": "tmpl",
+                "value": "VAR.tmpl.iut2tst.eth"
+              },
+              {
+                "name": "payload_len",
+                "value": "1234"
+              },
+              {
+                "name": "nb_pkts",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "type": "te-log-table",
+          "data": [
+            {
+              "line_number": 1,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917217.436421,
+                "formatted": "00:06:57.436"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Test start"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 2,
+                  "level": "INFO",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI Jumps",
+                  "timestamp": {
+                    "timestamp": 1713917217.43649,
+                    "formatted": "00:06:57.436"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Set jump point ../../../dpdk-ethdev-ts/ts/usecases/tx_burst_simple.c:58"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 3,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "Self",
+                  "timestamp": {
+                    "timestamp": 1713917217.4365,
+                    "formatted": "00:06:57.436"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Pseudo-random seed is 455119861"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 4,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.451711,
+                    "formatted": "00:06:57.451"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs) setlibname() -> 0 (OK)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 5,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.455069,
+                    "formatted": "00:06:57.455"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[2]): rte_eth_dev_get_port_by_name(name='0000:01:00.0') -> port_id=0; 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 6,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.45999,
+                    "formatted": "00:06:57.459"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[3]): rte_eth_dev_stop(0) ->  (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 7,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.461284,
+                    "formatted": "00:06:57.461"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[4]): rte_eth_dev_close(0) ->  (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 8,
+                  "level": "WARN",
+                  "entity_name": "RCF",
+                  "user_name": "DPDK",
+                  "timestamp": {
+                    "timestamp": 1713917217.471875,
+                    "formatted": "00:06:57.471"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "EAL: Releasing PCI mapped resource for 0000:01:00.0\nEAL: Calling pci_unmap_resource for 0000:01:00.0 at 0x1106860000\nEAL: Calling pci_unmap_resource for 0000:01:00.0 at 0x1107060000"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 9,
+                  "level": "INFO",
+                  "entity_name": "@LogListener",
+                  "user_name": "dwalin",
+                  "timestamp": {
+                    "timestamp": 1713917217.501437,
+                    "formatted": "00:06:57.501"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "[  214.631964] i40e 0000:01:00.0 enp1s0f0: NIC Link is Down"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 10,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.586845,
+                    "formatted": "00:06:57.586"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[5]): rte_eal_hotplug_remove(pci; 0000:01:00.0) -> 0 (OK)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 11,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.588168,
+                    "formatted": "00:06:57.588"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[6]): rte_mempool_free((null)(0)(ALL)) ->  (OK)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 12,
+                  "level": "WARN",
+                  "entity_name": "RCF",
+                  "user_name": "DPDK",
+                  "timestamp": {
+                    "timestamp": 1713917217.600502,
+                    "formatted": "00:06:57.600"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "EAL: Using IOMMU type 8 (No-IOMMU)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 13,
+                  "level": "INFO",
+                  "entity_name": "@LogListener",
+                  "user_name": "balin",
+                  "timestamp": {
+                    "timestamp": 1713917217.757798,
+                    "formatted": "00:06:57.757"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "[  205.088252] vfio-pci 0000:01:00.0: Masking broken INTx support"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 14,
+                  "level": "INFO",
+                  "entity_name": "@LogListener",
+                  "user_name": "balin",
+                  "timestamp": {
+                    "timestamp": 1713917217.807649,
+                    "formatted": "00:06:57.807"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "[  205.113172] vfio-pci 0000:01:00.0: vfio_ecap_init: hiding ecap 0x19@0x1d0\n[  205.121072] vfio-pci 0000:01:00.0: vfio-noiommu device opened by user (dpdkrpc:2116)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 15,
+                  "level": "WARN",
+                  "entity_name": "RCF",
+                  "user_name": "DPDK",
+                  "timestamp": {
+                    "timestamp": 1713917217.888903,
+                    "formatted": "00:06:57.888"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "EAL: Probe PCI driver: net_i40e (8086:1572) device: 0000:01:00.0 (socket -1)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 16,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.934609,
+                    "formatted": "00:06:57.934"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[7]): rte_eal_hotplug_add(pci; 0000:01:00.0; ) -> 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 17,
+                  "level": "INFO",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI Jumps",
+                  "timestamp": {
+                    "timestamp": 1713917217.935054,
+                    "formatted": "00:06:57.935"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Remove jump point ../../../dpdk-ethdev-ts/ts/usecases/tx_burst_simple.c:58 at ../../../dpdk-ethdev-ts/ts/usecases/tx_burst_simple.c:58"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 18,
+                  "level": "INFO",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI Jumps",
+                  "timestamp": {
+                    "timestamp": 1713917217.93509,
+                    "formatted": "00:06:57.935"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Set jump point ../../../dpdk-ethdev-ts/ts/usecases/tx_burst_simple.c:58"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 19,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917217.935244,
+                "formatted": "00:06:57.935"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Initialize EAL, preparing of configured Ethernet device state"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 20,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.936181,
+                    "formatted": "00:06:57.936"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[8]): rte_eth_dev_info_get(0) -> dev_info={ driver_name=net_i40e, if_index=0, min_mtu=68, max_mtu=9702, min_rx_bufsize=1024, max_rx_pktlen=9728, max_rx_queues=320, max_tx_queues=320, max_mac_addrs=64, max_hash_mac_addrs=0, max_vfs=0, max_vmdq_pools=64, rx_queue_offload_capa=, rx_offload_capa=VLAN_STRIP|IPV4_CKSUM|UDP_CKSUM|TCP_CKSUM|QINQ_STRIP|OUTER_IPV4_CKSUM|VLAN_FILTER|VLAN_EXTEND|SCATTER|KEEP_CRC|RSS_HASH, tx_queue_offload_capa=MBUF_FAST_FREE, tx_offload_capa=VLAN_INSERT|IPV4_CKSUM|UDP_CKSUM|TCP_CKSUM|SCTP_CKSUM|TCP_TSO|OUTER_IPV4_CKSUM|QINQ_INSERT|VXLAN_TNL_TSO|GRE_TNL_TSO|IPIP_TNL_TSO|GENEVE_TNL_TSO|MULTI_SEGS|MBUF_FAST_FREE|OUTER_UDP_CKSUM, reta_size=512, hash_key_size=52, flow_type_rss_offloads=FRAG_IPV4|NONFRAG_IPV4_TCP|NONFRAG_IPV4_UDP|NONFRAG_IPV4_SCTP|NONFRAG_IPV4_OTHER|FRAG_IPV6|NONFRAG_IPV6_TCP|NONFRAG_IPV6_UDP|NONFRAG_IPV6_SCTP|NONFRAG_IPV6_OTHER|L2_PAYLOAD, default_rxconf={ rx_thresh={ pthresh=8, hthresh=8, wthresh=0 }, rx_free_thresh=32, rx_drop_en=0, rx_deferred_start=0, offloads= }, default_txconf={ tx_thresh={ pthresh=32, hthresh=0, wthresh=0 }, tx_rs_thresh=32, tx_free_thresh=32, txq_flags=, tx_deferred_start=0, offloads= }, vmdq_queue_base=64, vmdq_queue_num=256, vmdq_pool_base=0, rx_desc_lim={ nb_max=4096, nb_min=64, nb_align=32, nb_seg_max=0, nb_mtu_seg_max=0 }, tx_desc_lim={ nb_max=4096, nb_min=64, nb_align=32, nb_seg_max=255, nb_mtu_seg_max=8 }, speed_capa=1G|10G, nb_rx_queues=0, nb_tx_queues=0, default_rxportconf={ burst_size=32, ring_size=256, nb_queues=1 }, default_txportconf={ burst_size=32, ring_size=256, nb_queues=1 }, dev_capa=RUNTIME_RX_QUEUE_SETUP|RUNTIME_TX_QUEUE_SETUP } (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 21,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.940482,
+                    "formatted": "00:06:57.940"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[9]): rte_eth_dev_get_name_by_port(port_id=0) -> name='0000:01:00.0'; 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 22,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.95084,
+                    "formatted": "00:06:57.950"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[10]): rte_eth_dev_configure(0, 1, 1, { link_speeds=, rxmode={ mq_mode=NONE, mtu=0, offloads=, flags=HW_STRIP_CRC }, txmode={ mq_mode=NONE, offloads=, pvid=0, flags= }, lbpk_mode=0, rx_conf_adv={ rss_conf={rss_key=, rss_key_len=0, rss_hf=} }, dcb_cap_en=0, intr_conf={ lsc=0, rxq=0 } }) -> 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 23,
+                  "level": "ERROR",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.951564,
+                    "formatted": "00:06:57.951"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[11]): rte_eth_dev_socket_id(0) -> -1 (RPC-ENOENT)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 24,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917217.951592,
+                "formatted": "00:06:57.951"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Prepare mbufs to be sent and pattern to match it by @p tmpl"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 25,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.952191,
+                    "formatted": "00:06:57.952"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[12]): rte_eth_macaddr_get(0, 0x7fffee3e1d1c) -> 40:a6:b7:6e:cd:94 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 26,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.957203,
+                    "formatted": "00:06:57.957"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[13]): rte_pktmbuf_pool_create(name=tx_pool, n=4, cache_size=2, priv_size=0, data_room_size=3538, socket_id=0) -> rte_mempool(0x72) (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 27,
+                  "level": "INFO",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI Jumps",
+                  "timestamp": {
+                    "timestamp": 1713917217.9573,
+                    "formatted": "00:06:57.957"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Set jump point ../src/lib/rpcc_dpdk/tapi_rte_mbuf.c:337"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 28,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.958642,
+                    "formatted": "00:06:57.958"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[14]): rte_mk_mbuf_from_template(\n{\n  arg-sets {\n    simple-for:{\n      begin 1,\n      end 1\n    }\n  },\n  pdus {\n    eth:{\n      dst-addr plain:'00 10 29 38 03 98 'H,\n      src-addr plain:'40 A6 B7 6E CD 94 'H,\n      length-type plain:8111\n    }\n  },\n  payload length:1234\n},\nrte_mempool(0x72)) -> { rte_mbuf(0x1000073) }, 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 29,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.959348,
+                    "formatted": "00:06:57.959"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[15]): rte_mbuf_match_pattern(\n{\n  {\n    pdus {\n      eth:{\n        dst-addr plain:'00 10 29 38 03 98 'H,\n        src-addr plain:'40 A6 B7 6E CD 94 'H,\n        length-type plain:8111\n      }\n    }\n  }\n},\n{ rte_mbuf(0x1000073) }) -> 1, 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 30,
+                  "level": "INFO",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI Jumps",
+                  "timestamp": {
+                    "timestamp": 1713917217.959687,
+                    "formatted": "00:06:57.959"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Remove jump point ../src/lib/rpcc_dpdk/tapi_rte_mbuf.c:337 at ../src/lib/rpcc_dpdk/tapi_rte_mbuf.c:488"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 31,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917217.95971,
+                "formatted": "00:06:57.959"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Find out required MTU"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 32,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.960397,
+                    "formatted": "00:06:57.960"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[16]): rte_pktmbuf_get_tx_offload(rte_mbuf(0x1000073)) -> tx_offload = { l2_len = 14, l3_len = 0, l4_len = 0, tso_segsz = 0, outer_l3_len = 0, outer_l2_len = 0 } (OK)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 33,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.96113,
+                    "formatted": "00:06:57.961"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[17]): rte_pktmbuf_get_pkt_len(rte_mbuf(0x1000073)) -> 1248 (OK)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 34,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917217.961173,
+                "formatted": "00:06:57.961"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Adjust MTU on both ends"
+                }
+              ]
+            },
+            {
+              "line_number": 35,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917217.961551,
+                "formatted": "00:06:57.961"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Prepare started Ethernet device state"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 36,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.965774,
+                    "formatted": "00:06:57.965"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[18]): rte_pktmbuf_pool_create(name=pkts, n=544, cache_size=256, priv_size=0, data_room_size=2012, socket_id=0) -> rte_mempool(0x74) (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 37,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.966534,
+                    "formatted": "00:06:57.966"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[19]): rte_eth_rx_queue_setup(0, 0, 64, 0, (null), rte_mempool(0x74)) -> 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 38,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.96729,
+                    "formatted": "00:06:57.967"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[20]): rte_eth_tx_queue_setup(0, 0, 64, 0, (null)) -> 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 39,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917217.96795,
+                    "formatted": "00:06:57.967"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[21]): rte_eth_dev_get_mtu(0, 0x7fffee3e1cfe) -> 0 mtu=1500 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 40,
+                  "level": "INFO",
+                  "entity_name": "@LogListener",
+                  "user_name": "dwalin",
+                  "timestamp": {
+                    "timestamp": 1713917218.701437,
+                    "formatted": "00:06:58.701"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "[  215.810563] i40e 0000:01:00.0 enp1s0f0: NIC Link is Up, 10 Gbps Full Duplex, Flow Control: None"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 41,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917218.789789,
+                    "formatted": "00:06:58.789"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[22]): rte_eth_dev_start(0) -> 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 42,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917219.110507,
+                    "formatted": "00:06:59.110"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[23]): dpdk_eth_await_link_up(0, nb_attempts = 500, wait_int_ms = 20, after_up_ms = 300) -> 0 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 43,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.110961,
+                    "formatted": "00:06:59.110"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Created CSAP 1 'eth' (Peer:0) with parameters:\n"
+                    },
+                    {
+                      "type": "te-log-table-content-file",
+                      "content": "{\n  layers {\n    eth:{\n      device-id plain:\"enp1s0f0\",\n      receive-mode 15\n    }\n  }\n}"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 44,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.112935,
+                    "formatted": "00:06:59.112"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Starting receive operation on the CSAP 1 (Peer:0) timeout 4294967295 ms waiting for 0(unlimited) packets with pattern\n"
+                    },
+                    {
+                      "type": "te-log-table-content-file",
+                      "content": "{\n  {\n    pdus {\n      eth:{\n        dst-addr plain:'00 10 29 38 03 98 'H,\n        src-addr plain:'40 A6 B7 6E CD 94 'H,\n        length-type plain:8111\n      }\n    },\n    payload bytes:'B3 BB 7C 3B 35 91 C9 3B 7E CE 92 A1 8C 53 37 D4 65 A0 C2 F2 1A 2C A5 5D 3E 18 CB 4F CE 38 88 81 F3 05 BD 28 96 87 63 15 56 F6 B6 E3 4A ED B7 AF 8E 7A A1 A9 A6 47 07 E5 60 D3 34 2F 0B BD B0 FE C2 6E 27 59 F6 8B 6F 4C 81 26 2F CB 14 E7 7B A3 61 1D 4C 08 65 53 ED C5 26 21 F4 32 DF A5 31 A2 14 58 FC 0A E3 6B 57 64 92 86 30 A7 6E AB 4A CF C9 96 D7 2E EA C5 F3 11 E7 E8 43 C6 8E 74 68 A2 CD 64 AC B0 D0 03 15 62 8A 46 09 F8 F1 54 C8 BB EA A0 E9 D5 65 DD E6 4D C5 2A 13 53 9F 7B F5 6C E0 A2 1D B0 A6 32 13 30 78 1D 29 6A 71 F2 25 5C 92 0E 31 F8 EB 17 45 B1 42 59 05 E1 D5 FB 4E B5 9D 6B 66 43 9E 79 74 17 96 9D 81 08 8F A7 64 22 B6 95 1B A2 AD 61 54 EF BA 59 D1 8F 54 1F 45 F1 8B AB 35 2A 24 A9 41 BB 47 C3 C3 D7 6A 27 FA 21 BD 15 C4 6A 76 18 5A 31 71 2C C0 C6 4C 05 B8 D7 B1 ED 01 D5 97 42 90 DF 06 54 B7 71 7B B1 92 39 C7 56 A3 3E 6F FE 6F E1 2A 30 A7 76 36 60 4E E7 4E 50 BD E5 93 4E C5 99 A2 7C 0A 1E 2E 9C 57 F5 F3 FB 33 63 F9 A3 44 23 D3 EC 9A 0A 4C E8 F2 9A 38 AF 80 CB FD 45 64 9F C2 6F BE F0 0C 15 E6 00 10 1A 63 09 BE A7 2D 92 94 C7 9C E0 B0 8E 7A E8 3D FA B4 3B 40 19 DB 02 88 99 F3 95 AE D9 95 BF F4 F8 C9 B2 A0 F6 44 34 BE E0 14 6F 6F 8F 58 AD 8A 0C E8 CA 26 C3 CD AF 5C C0 44 0B 9A D9 CA 8E D2 94 41 72 8B 85 A7 49 66 BC B8 D5 4B 10 82 D5 1D 6A A0 43 2E 6D F3 8A 2E 37 95 C9 11 60 58 E3 F4 99 56 7F 1E FD C9 85 B9 82 5A 05 92 DD DB B0 48 7B F4 76 E9 E7 01 18 1F 97 E1 30 F7 39 14 EC D2 6B 6C F1 68 35 76 22 B7 D1 27 4A AF 03 FB F7 7F EF 6E 68 D7 6F 81 F6 06 62 27 FE 9B 3C EA 6E A7 56 60 10 8C D6 33 44 A8 5B 8F 57 5E 8A 4F DD 7A BD 46 51 2D C7 48 34 2A 70 32 C5 AD 1D 34 55 74 94 66 00 6B 99 45 14 F5 D4 6B 53 5F BB 31 DA 79 78 2C A7 3F 74 DB 69 E5 0D 2F 93 2B 64 E9 9F F8 4F A0 64 E9 E5 78 DE BA E4 32 1A A0 64 F4 19 DC 20 C0 1C 95 9C 86 7B A9 B6 0E D5 1A F7 74 13 47 14 77 31 FA F0 10 B5 D4 43 CF 74 A7 C3 8E 84 E4 4F A1 79 EB 27 F4 95 DD 03 6A F7 FB DF 0B 42 F4 82 73 EF 72 84 A4 47 C7 74 BC 6E 38 4B F3 1C 9A 94 95 86 BC 8A 1C 99 8D 87 91 88 66 9C CB 5A 1F 3F 4A 92 C3 EE D9 8A 63 96 F9 9B E1 EC B8 7C 81 4D 03 3D D7 1F D7 65 A7 68 ED 0D 04 B8 68 24 F7 B2 B6 BA A1 8F 44 05 26 3E A0 08 2A 58 85 AC A6 88 E9 7E A8 C0 E3 4F 29 D1 5D 2E 89 C5 52 80 78 08 3B 1A 98 80 1F BE BE C0 C7 E9 19 4C 95 BF D5 7F 3E 7E 3F 22 CE 68 F3 2B 97 7D F1 E9 FD 6A F1 39 84 89 B9 A3 48 77 64 10 61 7D 5D F6 3D 32 75 7B B1 B5 9E 7F 1E 91 AB B5 0E 9D 9E 0C 07 90 45 8C 1A FF 30 63 77 94 73 D8 11 D0 CE 4E 03 44 C9 B5 FA 68 35 18 F9 E0 CE 08 7E 6D 15 85 FD 5B 12 17 5A 42 7B D1 D6 EE A9 E7 BF 78 35 C3 BD FF 78 B7 67 AD D0 61 8E 9E 6A 0C 0C 7F 92 09 DA A4 21 34 E6 9C 06 BC 8B AF A4 4B 28 D9 0E E5 D9 87 9D 41 34 6D A2 C3 0C 0D D0 18 8C 62 22 67 07 44 9C EE E1 A2 AB 6C 52 4F B8 7A 29 C7 60 02 4E FD 43 83 6B E6 46 77 F3 16 90 7F 79 B3 E7 81 F7 83 6F D8 26 1A 45 78 69 FE F3 92 C5 54 95 13 51 D8 96 BC BE DD 34 B1 F4 C5 31 6E 79 18 EF 70 9C 5E 49 C2 79 8F 3B E2 8E 2F 75 53 83 0A 66 D5 E3 FD 92 A1 DB C7 53 CF 8C 85 3E 06 9E 2D 76 3A 8C C0 FD 05 50 39 E8 DE 69 5E 32 EC 68 99 C2 4B 96 54 ED 72 1B 41 42 A8 C7 80 AE 65 AD 25 A0 39 E6 9E 3F 37 D7 27 15 40 85 48 2D EE E1 EF 3A 78 44 28 EA 60 69 2C 08 30 AC B7 96 5A DD 36 94 C4 D4 D3 FB AC FB 11 ED 81 59 1B 6F 3A 0B AA B2 4F D2 9C AF 3C C9 B8 6D 75 70 03 D0 4D 3A 64 11 0F 38 0D BB 33 1E A9 B4 77 C4 24 B2 CF CE 64 1E A0 01 CE DC CA 86 4A 40 F7 4D 11 44 87 75 56 96 AD 63 52 E1 81 FB 95 F9 BF BA AB 8F 88 10 AE 28 12 7C 05 DC 03 4F 1D FA 9D 2E 3F 25 A4 95 BC 52 F8 0E 33 7A 0A C9 74 CA 83 1F 59 0B 30 07 34 42 83 39 1F 87 89 3C 81 26 6B C0 4B 10 56 07 62 4F 16 95 CA 21 5E 3E EB E2 5E 44 ED 8E 4C 22 D1 D0 5C F0 57 E5 2D D9 0C 99 9A 57 A9 F0 5F 0B 40 76 A0 0A 97 FF 48 82 E2 A7 C7 D0 36 14 F2 07 E4 4E F7 3B 34 25 15 40 BE AF 98 67 A0 F8 72 E0 6E 13 EA 06 13 33 89 'H\n  }\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 45,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917219.196221,
+                "formatted": "00:06:59.196"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Ensure that interface is UP on Tester side"
+                }
+              ]
+            },
+            {
+              "line_number": 46,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917219.203217,
+                "formatted": "00:06:59.203"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Validate and send the mbufs to @p iut_port Make sure that all are sent"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 47,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917219.203866,
+                    "formatted": "00:06:59.203"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[24]): rte_eth_tx_prepare(0, 0, { rte_mbuf(0x1000073) }, 1) -> 1 (RPC-ENOENT)"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 48,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI RPC",
+                  "timestamp": {
+                    "timestamp": 1713917219.204499,
+                    "formatted": "00:06:59.204"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "RPC (DPDK,iut_rpcs[25]): rte_eth_tx_burst(0, 0, { rte_mbuf(0x1000073) }, 1) -> 1 (RPC-ENOENT)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 49,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917219.204525,
+                "formatted": "00:06:59.204"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Receive packet on @p tst_if Check that the received packets matches the sent one from @p iut_port"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 50,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.205163,
+                    "formatted": "00:06:59.205"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Traffic receive operation on the CSAP 1 (Peer:0) got packet\n"
+                    },
+                    {
+                      "type": "te-log-table-content-file",
+                      "content": "{\n  received {\n    seconds 1713917219,\n    micro-seconds 204125\n  },\n  pdus {\n    eth:{\n      dst-addr plain:'00 10 29 38 03 98 'H,\n      src-addr plain:'40 A6 B7 6E CD 94 'H,\n      length-type plain:8111\n    }\n  },\n  payload bytes:'B3 BB 7C 3B 35 91 C9 3B 7E CE 92 A1 8C 53 37 D4 65 A0 C2 F2 1A 2C A5 5D 3E 18 CB 4F CE 38 88 81 F3 05 BD 28 96 87 63 15 56 F6 B6 E3 4A ED B7 AF 8E 7A A1 A9 A6 47 07 E5 60 D3 34 2F 0B BD B0 FE C2 6E 27 59 F6 8B 6F 4C 81 26 2F CB 14 E7 7B A3 61 1D 4C 08 65 53 ED C5 26 21 F4 32 DF A5 31 A2 14 58 FC 0A E3 6B 57 64 92 86 30 A7 6E AB 4A CF C9 96 D7 2E EA C5 F3 11 E7 E8 43 C6 8E 74 68 A2 CD 64 AC B0 D0 03 15 62 8A 46 09 F8 F1 54 C8 BB EA A0 E9 D5 65 DD E6 4D C5 2A 13 53 9F 7B F5 6C E0 A2 1D B0 A6 32 13 30 78 1D 29 6A 71 F2 25 5C 92 0E 31 F8 EB 17 45 B1 42 59 05 E1 D5 FB 4E B5 9D 6B 66 43 9E 79 74 17 96 9D 81 08 8F A7 64 22 B6 95 1B A2 AD 61 54 EF BA 59 D1 8F 54 1F 45 F1 8B AB 35 2A 24 A9 41 BB 47 C3 C3 D7 6A 27 FA 21 BD 15 C4 6A 76 18 5A 31 71 2C C0 C6 4C 05 B8 D7 B1 ED 01 D5 97 42 90 DF 06 54 B7 71 7B B1 92 39 C7 56 A3 3E 6F FE 6F E1 2A 30 A7 76 36 60 4E E7 4E 50 BD E5 93 4E C5 99 A2 7C 0A 1E 2E 9C 57 F5 F3 FB 33 63 F9 A3 44 23 D3 EC 9A 0A 4C E8 F2 9A 38 AF 80 CB FD 45 64 9F C2 6F BE F0 0C 15 E6 00 10 1A 63 09 BE A7 2D 92 94 C7 9C E0 B0 8E 7A E8 3D FA B4 3B 40 19 DB 02 88 99 F3 95 AE D9 95 BF F4 F8 C9 B2 A0 F6 44 34 BE E0 14 6F 6F 8F 58 AD 8A 0C E8 CA 26 C3 CD AF 5C C0 44 0B 9A D9 CA 8E D2 94 41 72 8B 85 A7 49 66 BC B8 D5 4B 10 82 D5 1D 6A A0 43 2E 6D F3 8A 2E 37 95 C9 11 60 58 E3 F4 99 56 7F 1E FD C9 85 B9 82 5A 05 92 DD DB B0 48 7B F4 76 E9 E7 01 18 1F 97 E1 30 F7 39 14 EC D2 6B 6C F1 68 35 76 22 B7 D1 27 4A AF 03 FB F7 7F EF 6E 68 D7 6F 81 F6 06 62 27 FE 9B 3C EA 6E A7 56 60 10 8C D6 33 44 A8 5B 8F 57 5E 8A 4F DD 7A BD 46 51 2D C7 48 34 2A 70 32 C5 AD 1D 34 55 74 94 66 00 6B 99 45 14 F5 D4 6B 53 5F BB 31 DA 79 78 2C A7 3F 74 DB 69 E5 0D 2F 93 2B 64 E9 9F F8 4F A0 64 E9 E5 78 DE BA E4 32 1A A0 64 F4 19 DC 20 C0 1C 95 9C 86 7B A9 B6 0E D5 1A F7 74 13 47 14 77 31 FA F0 10 B5 D4 43 CF 74 A7 C3 8E 84 E4 4F A1 79 EB 27 F4 95 DD 03 6A F7 FB DF 0B 42 F4 82 73 EF 72 84 A4 47 C7 74 BC 6E 38 4B F3 1C 9A 94 95 86 BC 8A 1C 99 8D 87 91 88 66 9C CB 5A 1F 3F 4A 92 C3 EE D9 8A 63 96 F9 9B E1 EC B8 7C 81 4D 03 3D D7 1F D7 65 A7 68 ED 0D 04 B8 68 24 F7 B2 B6 BA A1 8F 44 05 26 3E A0 08 2A 58 85 AC A6 88 E9 7E A8 C0 E3 4F 29 D1 5D 2E 89 C5 52 80 78 08 3B 1A 98 80 1F BE BE C0 C7 E9 19 4C 95 BF D5 7F 3E 7E 3F 22 CE 68 F3 2B 97 7D F1 E9 FD 6A F1 39 84 89 B9 A3 48 77 64 10 61 7D 5D F6 3D 32 75 7B B1 B5 9E 7F 1E 91 AB B5 0E 9D 9E 0C 07 90 45 8C 1A FF 30 63 77 94 73 D8 11 D0 CE 4E 03 44 C9 B5 FA 68 35 18 F9 E0 CE 08 7E 6D 15 85 FD 5B 12 17 5A 42 7B D1 D6 EE A9 E7 BF 78 35 C3 BD FF 78 B7 67 AD D0 61 8E 9E 6A 0C 0C 7F 92 09 DA A4 21 34 E6 9C 06 BC 8B AF A4 4B 28 D9 0E E5 D9 87 9D 41 34 6D A2 C3 0C 0D D0 18 8C 62 22 67 07 44 9C EE E1 A2 AB 6C 52 4F B8 7A 29 C7 60 02 4E FD 43 83 6B E6 46 77 F3 16 90 7F 79 B3 E7 81 F7 83 6F D8 26 1A 45 78 69 FE F3 92 C5 54 95 13 51 D8 96 BC BE DD 34 B1 F4 C5 31 6E 79 18 EF 70 9C 5E 49 C2 79 8F 3B E2 8E 2F 75 53 83 0A 66 D5 E3 FD 92 A1 DB C7 53 CF 8C 85 3E 06 9E 2D 76 3A 8C C0 FD 05 50 39 E8 DE 69 5E 32 EC 68 99 C2 4B 96 54 ED 72 1B 41 42 A8 C7 80 AE 65 AD 25 A0 39 E6 9E 3F 37 D7 27 15 40 85 48 2D EE E1 EF 3A 78 44 28 EA 60 69 2C 08 30 AC B7 96 5A DD 36 94 C4 D4 D3 FB AC FB 11 ED 81 59 1B 6F 3A 0B AA B2 4F D2 9C AF 3C C9 B8 6D 75 70 03 D0 4D 3A 64 11 0F 38 0D BB 33 1E A9 B4 77 C4 24 B2 CF CE 64 1E A0 01 CE DC CA 86 4A 40 F7 4D 11 44 87 75 56 96 AD 63 52 E1 81 FB 95 F9 BF BA AB 8F 88 10 AE 28 12 7C 05 DC 03 4F 1D FA 9D 2E 3F 25 A4 95 BC 52 F8 0E 33 7A 0A C9 74 CA 83 1F 59 0B 30 07 34 42 83 39 1F 87 89 3C 81 26 6B C0 4B 10 56 07 62 4F 16 95 CA 21 5E 3E EB E2 5E 44 ED 8E 4C 22 D1 D0 5C F0 57 E5 2D D9 0C 99 9A 57 A9 F0 5F 0B 40 76 A0 0A 97 FF 48 82 E2 A7 C7 D0 36 14 F2 07 E4 4E F7 3B 34 25 15 40 BE AF 98 67 A0 F8 72 E0 6E 13 EA 06 13 33 89 'H,\n  match-unit 1\n}"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 51,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.205404,
+                    "formatted": "00:06:59.205"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Traffic receive operation on the CSAP 1 (Peer:0) got 1 packets : OK"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 52,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "Library",
+                  "timestamp": {
+                    "timestamp": 1713917219.205449,
+                    "formatted": "00:06:59.205"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Sleeping 10 milliseconds"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 53,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.215588,
+                    "formatted": "00:06:59.215"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Stopping receive operation on the CSAP 1 (Peer:0) ..."
+                    }
+                  ]
+                },
+                {
+                  "line_number": 54,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.353814,
+                    "formatted": "00:06:59.353"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Stopped receive operation on the CSAP 1 (Peer:0) got 1 packets : OK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 55,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917219.353853,
+                "formatted": "00:06:59.353"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Check that no extra packets are received on Tester"
+                }
+              ]
+            },
+            {
+              "line_number": 56,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917219.354384,
+                "formatted": "00:06:59.354"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Check that number of received packets equal to sent"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 57,
+                  "level": "INFO",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "TAPI Jumps",
+                  "timestamp": {
+                    "timestamp": 1713917219.35442,
+                    "formatted": "00:06:59.354"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Jump from ../../../dpdk-ethdev-ts/ts/usecases/tx_burst_simple.c:155 to ../../../dpdk-ethdev-ts/ts/usecases/tx_burst_simple.c:58 rc=EOK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "line_number": 58,
+              "level": "RING",
+              "entity_name": "usecases/tx_burst_simple",
+              "user_name": "Step",
+              "timestamp": {
+                "timestamp": 1713917219.354443,
+                "formatted": "00:06:59.354"
+              },
+              "log_content": [
+                {
+                  "type": "te-log-table-content-text",
+                  "content": "Test cleanup"
+                }
+              ],
+              "children": [
+                {
+                  "line_number": 59,
+                  "level": "RING",
+                  "entity_name": "usecases/tx_burst_simple",
+                  "user_name": "RCF API",
+                  "timestamp": {
+                    "timestamp": 1713917219.369921,
+                    "formatted": "00:06:59.369"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "Destroy CSAP 1 (Peer:0): OK"
+                    }
+                  ]
+                },
+                {
+                  "line_number": 60,
+                  "level": "RING",
+                  "entity_name": "Tester",
+                  "user_name": "Run",
+                  "timestamp": {
+                    "timestamp": 1713917219.396776,
+                    "formatted": "00:06:59.396"
+                  },
+                  "log_content": [
+                    {
+                      "type": "te-log-table-content-text",
+                      "content": "\nObtained result is:\nPASSED\n\nExpected results are: default\nPASSED"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
