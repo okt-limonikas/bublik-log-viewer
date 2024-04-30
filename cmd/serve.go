@@ -1,4 +1,4 @@
-package main
+package command
 
 import (
 	"flag"
@@ -11,7 +11,7 @@ import (
 	"github.com/ts-factory/bublik-log-viewer/frontend"
 )
 
-func main() {
+func ServeLogs() {
 	var fLogPath string
 	var fPort string
 	var fHost string
