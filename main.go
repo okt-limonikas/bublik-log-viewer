@@ -1,7 +1,7 @@
 package main
 
-import command "github.com/okt-limonikas/bublik-log-viewer/cmd"
+import cmd "github.com/okt-limonikas/bublik-log-viewer/cmd"
 
 func main() {
-	command.ServeLogs()
+	cmd.ServeLogs()
 }
