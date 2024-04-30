@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ts-factory/bublik-log-viewer/frontend"
+	"github.com/okt-limonikas/bublik-log-viewer/frontend"
 )
 
 func ServeLogs() {
