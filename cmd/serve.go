@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/okt-limonikas/bublik-log-viewer/frontend"
+	"github.com/okt-limonikas/bublik-log-viewer/utils"
 )
 
 func ServeLogs() {
@@ -43,8 +44,14 @@ func ServeLogs() {
 		os.Exit(1)
 	}
 
-	log.Printf("The server is listening at http://%s:%s", fHost, fPort)
+	var url = fmt.Sprintf("http://%s:%s", fHost, fPort)
+
+	log.Printf("The server is listening at %s", url)
 	log.Printf("Serving log files from %s", resolvedLogPath)
+	err = utils.OpenURL(url)
+	if err != nil {
+		log.Printf("Failed to open browser!")
+	}
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", fHost, fPort), nil))
 }
