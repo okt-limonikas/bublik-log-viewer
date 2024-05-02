@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 )
@@ -15,15 +15,8 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number",
 	Long:  "Print current version of binary",
 	Run: func(cmd *cobra.Command, args []string) {
-		version, err := getCurrentVersion()
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		fmt.Printf("%s", version)
+		log.Printf("Current version: %s", version)
+		log.Printf("Build date: %s", date)
+		log.Printf("Commit: %s", commit)
 	},
-}
-
-func getCurrentVersion() (string, error) {
-	return "Helo", nil
 }
