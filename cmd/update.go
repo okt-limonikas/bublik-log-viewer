@@ -43,7 +43,7 @@ func Update() {
 	log.Println("Starting update process...")
 
 	log.Println("Fetching latest release info...")
-	response, err := http.Get(constants.GIT_URL)
+	response, err := http.Get(constants.RELEASE_URL)
 	if err != nil {
 		fmt.Println(errors.New("failed to fetch latest release"))
 	}
