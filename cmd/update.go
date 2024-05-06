@@ -1,12 +1,8 @@
 package cmd
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
 	"log"
-	"net/http"
 	"runtime"
 	"time"
 
@@ -20,7 +16,10 @@ var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update to latest version",
 	Run: func(cmd *cobra.Command, args []string) {
-		Update()
+		_, err := Update()
+		if err != nil {
+			log.Println(err)
+		}
 	},
 }
 
@@ -28,69 +27,62 @@ func init() {
 	rootCmd.AddCommand(updateCmd)
 }
 
-func getFormattedBinaryInfo() (string, error) {
+func getFormattedBinaryInfo() string {
 	switch runtime.GOOS {
 	case "windows":
-		return fmt.Sprintf("%s_%s_%s.zip", constants.BIN_NAME, "Windows", runtime.GOARCH), nil
+		return fmt.Sprintf("%s_%s_%s.zip", constants.BIN_NAME, "Windows", runtime.GOARCH)
 	case "darwin":
-		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BIN_NAME, "Darwin", runtime.GOARCH), nil
+		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BIN_NAME, "Darwin", runtime.GOARCH)
 	default:
-		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BIN_NAME, "Linux", runtime.GOARCH), nil
+		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BIN_NAME, "Linux", runtime.GOARCH)
 	}
 }
 
-func Update() {
+func Update() (interface{}, error) {
 	log.Println("Starting update process...")
 
-	log.Println("Fetching latest release info...")
-	response, err := http.Get(constants.RELEASE_URL)
-	if err != nil {
-		fmt.Println(errors.New("failed to fetch latest release"))
-	}
+	log.Printf("Version: %s", constants.Version)
+	log.Printf("Commit: %s", constants.Commit)
+	log.Printf("Date: %s", constants.Date)
 
-	body, err := io.ReadAll(response.Body)
-	defer response.Body.Close()
-	if err != nil {
-		fmt.Println("Failed to read response body")
-	}
+	archiveName := getFormattedBinaryInfo()
 
-	var release ReleaseResponse
-	err = json.Unmarshal(body, &release)
-	if err != nil {
-		fmt.Println("Failed to parse body")
-	}
-
-	log.Printf("Build version is: %s", constants.Version)
-	log.Printf("Build commit is: %s", constants.Commit)
-	log.Printf("Build date is: %s", constants.Date)
-
-	log.Printf("Latest release tag is: %s", release.TagName)
-
-	if constants.Version == release.TagName {
-		log.Println("Skipping release...")
-		return
-	}
-
-	log.Println("Starting update process...")
-	archiveName, err := getFormattedBinaryInfo()
-	if err != nil {
-		fmt.Println("Failed to get bindary info!")
-	}
-
-	log.Printf("Loading \"%s\"", archiveName)
-
-	u := &updater.Updater{
+	updater := &updater.Updater{
 		Provider: &provider.Github{
-			RepositoryURL: "github.com/okt-limonikas/bublik-log-viewer",
+			RepositoryURL: constants.GITHUB_REPO,
 			ArchiveName:   archiveName,
 		},
 		ExecutableName: constants.BIN_NAME,
 		Version:        constants.Version,
 	}
 
-	if _, err := u.Update(); err != nil {
-		log.Println(err)
+	log.Println("Checking latest version...")
+	latestVersion, err := updater.GetLatestVersion()
+	if err != nil {
+		return nil, err
 	}
+	log.Printf("Latest version: %s", latestVersion)
+
+	log.Println("Determining if can update...")
+	canUpdate, err := updater.CanUpdate()
+	if err != nil {
+		return nil, err
+	}
+
+	if !canUpdate {
+		log.Println("Can't update")
+		log.Println("Skipping...")
+		return nil, nil
+	}
+
+	log.Printf("Loading \"%s\"", archiveName)
+	if _, err = updater.Update(); err != nil {
+		return nil, err
+	}
+
+	log.Printf("Succesfully updated to %s", latestVersion)
+
+	return nil, nil
 }
 
 type ReleaseResponse struct {
