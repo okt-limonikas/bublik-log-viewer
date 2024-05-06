@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "go",
+      "label": "go: build package",
+      "command": "build",
+      "args": ["${fileDirname}"],
+      "problemMatcher": ["$go"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "cd /Users/limonikas/workspace/bublik-home/bublik-log-viewer; go build ${fileDirname}"
+    },
+    {
+      "type": "shell",
+      "label": "TEST",
+      "command": "goreleaser build --clean --debug --snapshot --config .goreleaser.yaml && dist/bublik-log-viewer_darwin_arm64/bublik-log-viewer version"
+    }
+  ]
+}

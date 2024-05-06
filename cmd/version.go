@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/okt-limonikas/bublik-log-viewer/constants"
 	"github.com/spf13/cobra"
 )
 
@@ -15,8 +16,8 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number",
 	Long:  "Print current version of binary",
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Printf("Current version: %s", version)
-		log.Printf("Build date: %s", date)
-		log.Printf("Commit: %s", commit)
+		log.Printf("Current version: %s", constants.Version)
+		log.Printf("Build date: %s", constants.Date)
+		log.Printf("Commit: %s", constants.Commit)
 	},
 }

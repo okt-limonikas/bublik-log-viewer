@@ -20,12 +20,11 @@ builds:
       - CGO_ENABLED=0
     goos:
       - linux
-      - windows
       - darwin
     ldflags:
-      - -X cmd/update.build={{.Version}}
-      - -X cmd/update.commit={{.Commit}}
-      - -X cmd/update.date={{.Date}}
+      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/constants.Build={{.Version}}"
+      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/constants.Commit={{.Commit}}"
+      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/constants.Date={{.Date}}"
 
 archives:
   - format: tar.gz

@@ -16,12 +16,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	version = "dev"
-	commit  = "none"
-	date    = "unknown"
-)
-
 var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update to latest version",
@@ -66,13 +60,13 @@ func Update() {
 		fmt.Println("Failed to parse body")
 	}
 
-	log.Printf("Build version is: %s", version)
-	log.Printf("Build commit is: %s", commit)
-	log.Printf("Build date is: %s", date)
+	log.Printf("Build version is: %s", constants.Version)
+	log.Printf("Build commit is: %s", constants.Commit)
+	log.Printf("Build date is: %s", constants.Date)
 
 	log.Printf("Latest release tag is: %s", release.TagName)
 
-	if version == release.TagName {
+	if constants.Version == release.TagName {
 		log.Println("Skipping release...")
 		return
 	}
@@ -91,7 +85,7 @@ func Update() {
 			ArchiveName:   archiveName,
 		},
 		ExecutableName: constants.BIN_NAME,
-		Version:        version,
+		Version:        constants.Version,
 	}
 
 	if _, err := u.Update(); err != nil {
