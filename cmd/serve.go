@@ -63,46 +63,63 @@ type LogsInput struct {
 	isRemote          bool
 }
 
-func ServeLogs(input *LogsInput) {
+func createLogHandler(pathOrUrl string, isRemote bool) http.Handler {
 	var handleJsonLogs http.Handler
-	if input.isRemote {
-		url, err := url.Parse(input.path)
+
+	if isRemote {
+		url, err := url.Parse(pathOrUrl)
 		if err != nil {
 			log.Fatal("Failed to parse URL")
 		}
 		handleJsonLogs = httputil.NewSingleHostReverseProxy(url)
 	} else {
-		fs := http.FileServer(http.Dir(input.path))
+		fs := http.FileServer(http.Dir(pathOrUrl))
 		handleJsonLogs = http.StripPrefix("/json/", fs)
 	}
 
+	return handleJsonLogs
+}
+
+func resolvePath(pathOrUrl string, isRemote bool) string {
 	var resolvedPath string
-	if input.isRemote {
-		resolvedPath = input.path
+	if isRemote {
+		resolvedPath = pathOrUrl
 	} else {
-		path, err := filepath.Abs(input.path)
+		path, err := filepath.Abs(pathOrUrl)
 		if err != nil {
 			log.Fatal("Error getting absolute path of log directory:", err)
 		}
 		resolvedPath = path
 	}
+	return resolvedPath
+}
 
-	http.Handle("/json/", handleJsonLogs)
-	http.HandleFunc("/", handleSPA)
-
-	var resolvedUrl = fmt.Sprintf("http://%s:%s", input.host, input.port)
-
-	log.Printf("The server is listening at %s", resolvedUrl)
-	log.Printf("Serving log files from %s", resolvedPath)
-
-	if input.shouldOpenBrowser {
-		err := utils.OpenURL(resolvedUrl)
+func maybeOpenBrowser(url string, shouldOpenBrowser bool) {
+	if shouldOpenBrowser {
+		err := utils.OpenURL(url)
 		if err != nil {
 			log.Printf("Failed to open browser!")
 		}
 	}
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", input.host, input.port), nil))
+}
+
+func ServeLogs(input *LogsInput) {
+	var resolvedUrl = fmt.Sprintf("http://%s:%s", input.host, input.port)
+
+	http.Handle("/json/", createLogHandler(input.path, input.isRemote))
+	http.HandleFunc("/", handleSPA)
+
+	log.Printf("The server is listening at %s", resolvedUrl)
+	log.Printf("Serving log files from %s", resolvePath(input.path, input.isRemote))
+
+	maybeOpenBrowser(resolvedUrl, input.shouldOpenBrowser)
+
+	err := http.ListenAndServe(fmt.Sprintf("%s:%s", input.host, input.port), nil)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func handleSPA(w http.ResponseWriter, r *http.Request) {
