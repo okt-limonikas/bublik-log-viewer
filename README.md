@@ -1,6 +1,6 @@
 ## Install
 
-### Go Toolchain
+### Toolchain
 
 1. Make sure you installed go https://go.dev/doc/install
 2. Install `go install github.com/okt-limonikas/bublik-log-viewer@latest`
@@ -32,3 +32,9 @@ curl -fsSL \
 This will install bublik-log-viewer version v3.5.0 in directory:
 
 `$HOME/.bublik/bin/bublik-log-viewer`
+
+### Docker (Recomended for now)
+
+1. Clone `git clone git@github.com:okt-limonikas/bublik-log-viewer.git`
+2. Build `docker build -t log-viewer .`
+3. Run `docker run -it -v $(pwd)/example/logs:/root/json -p 5050:5050 log-viewer`

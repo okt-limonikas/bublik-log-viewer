@@ -8,14 +8,16 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o app cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o app main.go
 
 FROM alpine:latest
 
 WORKDIR /root/
 
+RUN mkdir json
+
 COPY --from=builder /app/app .
 
 EXPOSE 5050
 
-CMD ["./app"]
+CMD ["./app", "serve", "./json", "--host", "0.0.0.0"]
