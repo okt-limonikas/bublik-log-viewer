@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 	"path/filepath"
 
@@ -16,6 +18,7 @@ import (
 var fPort string
 var fHost string
 var shouldOpen bool
+var isRemote bool
 
 var serveLogsCmd = &cobra.Command{
 	Use:   "serve log_path",
@@ -29,7 +32,11 @@ var serveLogsCmd = &cobra.Command{
 			log.Fatal("Empty log path provided")
 		}
 
-		input := LogsInput{path: path, host: fHost, port: fPort, shouldOpenBrowser: shouldOpen}
+		input := LogsInput{
+			path: path, host: fHost,
+			port: fPort, shouldOpenBrowser: shouldOpen,
+			isRemote: isRemote,
+		}
 		err := CheckForUpdateScheduled()
 		if err != nil {
 			log.Println("failed to check for last update time: %w", err)
@@ -45,6 +52,7 @@ func init() {
 	serveLogsCmd.Flags().StringVar(&fHost, "host", "127.0.0.1", "Host address")
 	serveLogsCmd.Flags().StringVar(&fPort, "port", "5050", "Port number")
 	serveLogsCmd.Flags().BoolVar(&shouldOpen, "open", false, "Should open browser")
+	serveLogsCmd.Flags().BoolVar(&isRemote, "remote", false, "Serve remote logs")
 }
 
 type LogsInput struct {
@@ -52,27 +60,43 @@ type LogsInput struct {
 	host              string
 	port              string
 	shouldOpenBrowser bool
+	isRemote          bool
 }
 
 func ServeLogs(input *LogsInput) {
-	fs := http.FileServer(http.Dir(input.path))
-	http.Handle("/json/", http.StripPrefix("/json/", fs))
-	http.HandleFunc("/", handleSPA)
-
-	path, err := filepath.Abs(input.path)
-
-	if err != nil {
-		fmt.Println("Error getting absolute path of log directory:", err)
-		os.Exit(1)
+	var handleJsonLogs http.Handler
+	if input.isRemote {
+		url, err := url.Parse(input.path)
+		if err != nil {
+			log.Fatal("Failed to parse URL")
+		}
+		handleJsonLogs = httputil.NewSingleHostReverseProxy(url)
+	} else {
+		fs := http.FileServer(http.Dir(input.path))
+		handleJsonLogs = http.StripPrefix("/json/", fs)
 	}
 
-	var url = fmt.Sprintf("http://%s:%s", input.host, input.port)
+	var resolvedPath string
+	if input.isRemote {
+		resolvedPath = input.path
+	} else {
+		path, err := filepath.Abs(input.path)
+		if err != nil {
+			log.Fatal("Error getting absolute path of log directory:", err)
+		}
+		resolvedPath = path
+	}
 
-	log.Printf("The server is listening at %s", url)
-	log.Printf("Serving log files from %s", path)
+	http.Handle("/json/", handleJsonLogs)
+	http.HandleFunc("/", handleSPA)
+
+	var resolvedUrl = fmt.Sprintf("http://%s:%s", input.host, input.port)
+
+	log.Printf("The server is listening at %s", resolvedUrl)
+	log.Printf("Serving log files from %s", resolvedPath)
 
 	if input.shouldOpenBrowser {
-		err = utils.OpenURL(url)
+		err := utils.OpenURL(resolvedUrl)
 		if err != nil {
 			log.Printf("Failed to open browser!")
 		}
