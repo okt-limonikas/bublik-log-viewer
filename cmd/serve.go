@@ -30,6 +30,10 @@ var serveLogsCmd = &cobra.Command{
 		}
 
 		input := LogsInput{path: path, host: fHost, port: fPort, shouldOpenBrowser: shouldOpen}
+		err := CheckForUpdateScheduled()
+		if err != nil {
+			log.Println("failed to check for last update time: %w", err)
+		}
 
 		ServeLogs(&input)
 	},

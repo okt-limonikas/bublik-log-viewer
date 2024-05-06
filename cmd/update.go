@@ -3,9 +3,12 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 	"runtime"
+	"time"
 
 	"github.com/Masterminds/semver"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/mouuff/go-rocket-update/pkg/provider"
 	"github.com/mouuff/go-rocket-update/pkg/updater"
 	"github.com/okt-limonikas/bublik-log-viewer/constants"
@@ -16,8 +19,15 @@ var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update to latest version",
 	Run: func(cmd *cobra.Command, args []string) {
-		_, err := Update()
+		_, err := PerformUpdate()
 		if err != nil {
+			log.Println(err)
+		}
+
+		err = UpdateLastUpdateTime()
+
+		if err != nil {
+			err := fmt.Errorf("failed to update last update file %w", err)
 			log.Println(err)
 		}
 	},
@@ -27,54 +37,139 @@ func init() {
 	rootCmd.AddCommand(updateCmd)
 }
 
-func Update() (interface{}, error) {
+var archiveName = getFormattedBinaryInfo()
+
+var UpdateManager = &updater.Updater{
+	Provider: &provider.Github{
+		RepositoryURL: constants.GITHUB_REPO,
+		ArchiveName:   archiveName,
+	},
+	ExecutableName: constants.BIN_NAME,
+	Version:        constants.Version,
+}
+
+func readLastUpdateTime() (time.Time, error) {
+	if _, err := os.Stat(constants.LastUpdateFile); os.IsNotExist(err) {
+		// Create the file if it doesn't exist
+		err := os.WriteFile(constants.LastUpdateFile, []byte(time.Now().Format(time.RFC3339)), 0644)
+
+		if err != nil {
+			return time.Now(), fmt.Errorf("failed to create last update time file: %w", err)
+		}
+		return time.Now(), nil
+	}
+
+	data, err := os.ReadFile(constants.LastUpdateFile)
+	if err != nil {
+		return time.Now(), fmt.Errorf("failed to read last update time from file: %w", err)
+	}
+
+	lastUpdate, err := time.Parse(time.RFC3339, string(data))
+	if err != nil {
+		return time.Now(), fmt.Errorf("failed to parse last update time: %w", err)
+	}
+
+	return lastUpdate, nil
+}
+
+func CheckForUpdateScheduled() error {
+	lastUpdate, err := readLastUpdateTime()
+
+	if err != nil {
+		return fmt.Errorf("failed to get last update time: %w", err)
+	}
+
+	// If the last update check was less than UpdateInterval ago, do not check again
+	if time.Since(lastUpdate) < constants.UpdateInterval {
+		log.Println("Update check skipped. Minimum update interval not reached.")
+		return nil
+	}
+
+	versions, err := GetVerions()
+	if err != nil {
+		return fmt.Errorf("failed to get versions %w", err)
+	}
+
+	err = UpdateLastUpdateTime()
+	if err != nil {
+		return fmt.Errorf("failed to update last update time: %w", err)
+	}
+
+	var style = lipgloss.NewStyle().
+		Bold(true).
+		Foreground(lipgloss.AdaptiveColor{Light: "#874BFD", Dark: "#7D56F4"}).
+		Padding(1).Border(lipgloss.NormalBorder())
+
+	if shouldUpdate(versions.current, versions.latest) {
+		message := fmt.Sprintf("New version available: v%s\nYou can update: `bublik-log-viewer update`", versions.latest.String())
+		fmt.Println(style.Render(message))
+	}
+
+	return nil
+}
+
+func UpdateLastUpdateTime() error {
+	err := os.WriteFile(constants.LastUpdateFile, []byte(time.Now().Format(time.RFC3339)), 0644)
+	if err != nil {
+		return fmt.Errorf("failed to update last update time file: %w", err)
+	}
+	return nil
+}
+
+type Versions struct {
+	current *semver.Version
+	latest  *semver.Version
+}
+
+func GetVerions() (*Versions, error) {
+	latestVersion, err := UpdateManager.GetLatestVersion()
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch latest version: %w", err)
+	}
+
+	latestVersionSem, err := semver.NewVersion(latestVersion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create latest version struct: %w", err)
+	}
+
+	currentVersion, err := semver.NewVersion(constants.Version)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create current version struct: %w", err)
+	}
+
+	return &Versions{current: currentVersion, latest: latestVersionSem}, nil
+}
+
+func shouldUpdate(current *semver.Version, latest *semver.Version) bool {
+	return latest.GreaterThan(current)
+}
+
+func PerformUpdate() (interface{}, error) {
 	log.Println("Starting update process...")
 
 	log.Printf("Version: %s", constants.Version)
 	log.Printf("Commit: %s", constants.Commit)
 	log.Printf("Date: %s", constants.Date)
 
-	archiveName := getFormattedBinaryInfo()
-
-	updater := &updater.Updater{
-		Provider: &provider.Github{
-			RepositoryURL: constants.GITHUB_REPO,
-			ArchiveName:   archiveName,
-		},
-		ExecutableName: constants.BIN_NAME,
-		Version:        constants.Version,
-	}
-
 	log.Println("Checking latest version...")
-	latestVersion, err := updater.GetLatestVersion()
+	latestVersion, err := UpdateManager.GetLatestVersion()
 	if err != nil {
 		return nil, err
 	}
 	log.Printf("Latest version: %s", latestVersion)
 
-	currentVersionSem, currentErr := semver.NewVersion(constants.Version)
-	if currentErr != nil {
-		log.Println("Failed to construct current version struct")
+	versions, err := GetVerions()
+	if err != nil {
+		return nil, fmt.Errorf("failed to create versions struct %w", err)
 	}
 
-	latestVersionSem, latestErr := semver.NewVersion(latestVersion)
-	if latestErr != nil {
-		log.Println("Failed to construct latest version struct")
-	}
-
-	if currentErr != nil || latestErr != nil {
-		log.Println("Failed to construct semver. Trying to update...")
-	}
-
-	if currentErr == nil && latestErr == nil {
-		if currentVersionSem.GreaterThan(latestVersionSem) || currentVersionSem.Equal(latestVersionSem) {
-			log.Println("You are already on latest version...")
-			return nil, nil
-		}
+	if !shouldUpdate(versions.current, versions.latest) {
+		log.Println("You are already on latest version...")
+		return nil, nil
 	}
 
 	log.Printf("Loading \"%s\"", archiveName)
-	_, err = updater.Update()
+	_, err = UpdateManager.Update()
 	if err != nil {
 		return nil, err
 	}
