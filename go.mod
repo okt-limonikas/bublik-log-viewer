@@ -3,6 +3,7 @@ module github.com/okt-limonikas/bublik-log-viewer
 go 1.22.2
 
 require (
+	github.com/Masterminds/semver v1.5.0
 	github.com/mouuff/go-rocket-update v1.5.4
 	github.com/spf13/cobra v1.8.0
 )
