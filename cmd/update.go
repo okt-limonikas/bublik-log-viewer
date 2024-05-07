@@ -19,16 +19,14 @@ var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update to latest version",
 	Run: func(cmd *cobra.Command, args []string) {
-		_, err := PerformUpdate()
+		err := performUpdate()
 		if err != nil {
-			log.Println(err)
+			log.Fatal(err)
 		}
 
-		err = UpdateLastUpdateTime()
-
+		err = updateLastUpdateTime()
 		if err != nil {
-			err := fmt.Errorf("failed to update last update file %w", err)
-			log.Println(err)
+			log.Fatal("Failed to update last update file")
 		}
 	},
 }
@@ -37,9 +35,9 @@ func init() {
 	rootCmd.AddCommand(updateCmd)
 }
 
-var archiveName = getFormattedBinaryInfo()
+var archiveName = getArchiveName()
 
-var UpdateManager = &updater.Updater{
+var updateManager = &updater.Updater{
 	Provider: &provider.Github{
 		RepositoryURL: constants.GITHUB_REPO,
 		ArchiveName:   archiveName,
@@ -72,9 +70,8 @@ func readLastUpdateTime() (time.Time, error) {
 	return lastUpdate, nil
 }
 
-func CheckForUpdateScheduled() error {
+func checkForUpdateScheduled() error {
 	lastUpdate, err := readLastUpdateTime()
-
 	if err != nil {
 		return fmt.Errorf("failed to get last update time: %w", err)
 	}
@@ -85,12 +82,12 @@ func CheckForUpdateScheduled() error {
 		return nil
 	}
 
-	versions, err := GetVerions()
+	versions, err := getVerions()
 	if err != nil {
 		return fmt.Errorf("failed to get versions %w", err)
 	}
 
-	err = UpdateLastUpdateTime()
+	err = updateLastUpdateTime()
 	if err != nil {
 		return fmt.Errorf("failed to update last update time: %w", err)
 	}
@@ -108,7 +105,7 @@ func CheckForUpdateScheduled() error {
 	return nil
 }
 
-func UpdateLastUpdateTime() error {
+func updateLastUpdateTime() error {
 	err := os.WriteFile(constants.LastUpdateFile, []byte(time.Now().Format(time.RFC3339)), 0644)
 	if err != nil {
 		return fmt.Errorf("failed to update last update time file: %w", err)
@@ -121,8 +118,8 @@ type Versions struct {
 	latest  *semver.Version
 }
 
-func GetVerions() (*Versions, error) {
-	latestVersion, err := UpdateManager.GetLatestVersion()
+func getVerions() (*Versions, error) {
+	latestVersion, err := updateManager.GetLatestVersion()
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch latest version: %w", err)
 	}
@@ -144,7 +141,7 @@ func shouldUpdate(current *semver.Version, latest *semver.Version) bool {
 	return latest.GreaterThan(current)
 }
 
-func PerformUpdate() (interface{}, error) {
+func performUpdate() error {
 	log.Println("Starting update process...")
 
 	log.Printf("Version: %s", constants.Version)
@@ -152,34 +149,34 @@ func PerformUpdate() (interface{}, error) {
 	log.Printf("Date: %s", constants.Date)
 
 	log.Println("Checking latest version...")
-	latestVersion, err := UpdateManager.GetLatestVersion()
+	latestVersion, err := updateManager.GetLatestVersion()
 	if err != nil {
-		return nil, err
+		return err
 	}
 	log.Printf("Latest version: %s", latestVersion)
 
-	versions, err := GetVerions()
+	versions, err := getVerions()
 	if err != nil {
-		return nil, fmt.Errorf("failed to create versions struct %w", err)
+		return fmt.Errorf("failed to create versions struct %w", err)
 	}
 
 	if !shouldUpdate(versions.current, versions.latest) {
 		log.Println("You are already on latest version...")
-		return nil, nil
+		return nil
 	}
 
 	log.Printf("Loading \"%s\"", archiveName)
-	_, err = UpdateManager.Update()
+	_, err = updateManager.Update()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	log.Printf("Succesfully updated to %s", latestVersion)
 
-	return nil, nil
+	return nil
 }
 
-func getFormattedBinaryInfo() string {
+func getArchiveName() string {
 	switch runtime.GOOS {
 	case "windows":
 		return fmt.Sprintf("%s_%s_%s.zip", constants.BIN_NAME, "Windows", runtime.GOARCH)

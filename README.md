@@ -21,18 +21,6 @@ curl -fsSL \
 - The default output directory is `${HOME}/.local/bin`, but can be changed by setting `LOG_INSTALL`.
 - **Do not include `/bin`, it is added by the script.**
 
-- Optionally, a version can be specified as an argument. The default is to download the latest version.
-
-```shell
-curl -fsSL \
- https://raw.githubusercontent.com/okt-limonikas/bublik-log-viewer/master/install.sh |\
- LOG_INSTALL=$HOME/.bublik sh -s v3.5.0
-```
-
-This will install bublik-log-viewer version v3.5.0 in directory:
-
-`$HOME/.bublik/bin/bublik-log-viewer`
-
 ### Docker (Recomended for now)
 
 1. Clone `git clone git@github.com:okt-limonikas/bublik-log-viewer.git`
