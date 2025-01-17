@@ -21,7 +21,7 @@ curl -fsSL \
 - The default output directory is `${HOME}/.local/bin`, but can be changed by setting `LOG_INSTALL`.
 - **Do not include `/bin`, it is added by the script.**
 
-### Docker (Recomended for now)
+### Docker (Recommended for now)
 
 1. Clone `git clone git@github.com:okt-limonikas/bublik-log-viewer.git`
 2. Build `docker build -t log-viewer .`

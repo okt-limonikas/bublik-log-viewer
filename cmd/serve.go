@@ -35,7 +35,7 @@ var serveLogsCmd = &cobra.Command{
 	Long:  `This command will serve logs from the specified directory or URL`,
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var path = args[0]
+		path := args[0]
 
 		input := LogsInput{path, host, port, shouldOpenBrowser, isRemote}
 
@@ -53,7 +53,7 @@ func init() {
 
 	serveLogsCmd.Flags().StringVar(&host, "host", "127.0.0.1", "Host address")
 	serveLogsCmd.Flags().StringVar(&port, "port", "5050", "Port number")
-	serveLogsCmd.Flags().BoolVar(&shouldOpenBrowser, "open", false, "Should open browser")
+	serveLogsCmd.Flags().BoolVar(&shouldOpenBrowser, "open", true, "Should open browser")
 	serveLogsCmd.Flags().BoolVar(&isRemote, "remote", false, "Serve remote logs")
 }
 
@@ -116,7 +116,7 @@ func maybeOpenBrowser(url string, shouldOpenBrowser bool) {
 }
 
 func serveLogs(input *LogsInput) {
-	var resolvedUrl = fmt.Sprintf("http://%s:%s", input.host, input.port)
+	resolvedUrl := fmt.Sprintf("http://%s:%s", input.host, input.port)
 
 	http.Handle("/json/", createLogHandler(input.path, input.isRemote))
 	http.HandleFunc("/", handleSPA)
