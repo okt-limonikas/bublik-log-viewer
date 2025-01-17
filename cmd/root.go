@@ -9,7 +9,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   constants.BIN_NAME,
+	Use:   constants.BinName,
 	Short: "Log viewer for JSON logs",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) == 0 && cmd.Flags().NFlag() == 0 {

@@ -13,7 +13,7 @@ import (
 var BuildFs embed.FS
 
 func BuildHTTPFS() http.FileSystem {
-	build, err := fs.Sub(BuildFs, constants.BUILD_PATH)
+	build, err := fs.Sub(BuildFs, constants.BuildPath)
 
 	if err != nil {
 		log.Fatal(err)

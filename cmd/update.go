@@ -39,10 +39,10 @@ var archiveName = getArchiveName()
 
 var updateManager = &updater.Updater{
 	Provider: &provider.Github{
-		RepositoryURL: constants.GITHUB_REPO,
+		RepositoryURL: constants.GithubRepo,
 		ArchiveName:   archiveName,
 	},
-	ExecutableName: constants.BIN_NAME,
+	ExecutableName: constants.BinName,
 	Version:        constants.Version,
 }
 
@@ -179,10 +179,10 @@ func performUpdate() error {
 func getArchiveName() string {
 	switch runtime.GOOS {
 	case "windows":
-		return fmt.Sprintf("%s_%s_%s.zip", constants.BIN_NAME, "Windows", runtime.GOARCH)
+		return fmt.Sprintf("%s_%s_%s.zip", constants.BinName, "Windows", runtime.GOARCH)
 	case "darwin":
-		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BIN_NAME, "Darwin", runtime.GOARCH)
+		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BinName, "Darwin", runtime.GOARCH)
 	default:
-		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BIN_NAME, "Linux", runtime.GOARCH)
+		return fmt.Sprintf("%s_%s_%s.tar.gz", constants.BinName, "Linux", runtime.GOARCH)
 	}
 }

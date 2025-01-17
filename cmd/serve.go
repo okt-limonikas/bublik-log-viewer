@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -22,7 +23,7 @@ var host string
 // Port for create HTTP server
 var port string
 
-// Determines if should try to open user browser
+// Determines if you should try to open user browser
 var shouldOpenBrowser bool
 
 // Determines if passed value is URL
@@ -34,7 +35,7 @@ var serveLogsCmd = &cobra.Command{
 	Long:  `This command will serve logs from the specified directory or URL`,
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var path string = args[0]
+		var path = args[0]
 
 		input := LogsInput{path, host, port, shouldOpenBrowser, isRemote}
 
@@ -68,19 +69,19 @@ func createLogHandler(pathOrUrl string, isRemote bool) http.Handler {
 	var handleJsonLogs http.Handler
 
 	if isRemote {
-		url, err := url.Parse(pathOrUrl)
+		parsedUrl, err := url.Parse(pathOrUrl)
 		if err != nil {
 			log.Fatal("Failed to parse URL")
 		}
 
-		if !strings.HasPrefix(url.Scheme, "http://") && !strings.HasPrefix(url.Scheme, "https://") {
+		if !strings.HasPrefix(parsedUrl.Scheme, "http://") && !strings.HasPrefix(parsedUrl.Scheme, "https://") {
 			log.Fatal("Not supported URL scheme")
 		}
 
-		handleJsonLogs = httputil.NewSingleHostReverseProxy(url)
+		handleJsonLogs = httputil.NewSingleHostReverseProxy(parsedUrl)
 	} else {
-		fs := http.FileServer(http.Dir(pathOrUrl))
-		handleJsonLogs = http.StripPrefix("/json/", fs)
+		fileServer := http.FileServer(http.Dir(pathOrUrl))
+		handleJsonLogs = http.StripPrefix("/json/", fileServer)
 	}
 
 	return handleJsonLogs
@@ -132,23 +133,31 @@ func serveLogs(input *LogsInput) {
 }
 
 func handleSPA(w http.ResponseWriter, r *http.Request) {
-	f, err := frontend.BuildFs.Open(filepath.Join(constants.BUILD_PATH, r.URL.Path))
+	f, err := frontend.BuildFs.Open(filepath.Join(constants.BuildPath, r.URL.Path))
 
 	if os.IsNotExist(err) {
-		index, err := frontend.BuildFs.ReadFile(filepath.Join(constants.BUILD_PATH, "index.html"))
+		index, err := frontend.BuildFs.ReadFile(filepath.Join(constants.BuildPath, "index.html"))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		w.WriteHeader(http.StatusAccepted)
-		w.Write(index)
+		_, err = w.Write(index)
+		if err != nil {
+			return
+		}
 		return
 	} else if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	defer f.Close()
+	defer func(f fs.File) {
+		err := f.Close()
+		if err != nil {
+			return
+		}
+	}(f)
 
 	http.FileServer(frontend.BuildHTTPFS()).ServeHTTP(w, r)
 }

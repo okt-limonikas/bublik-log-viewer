@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-const BIN_NAME = "bublik-log-viewer"
-const BUILD_PATH = "build"
-const GITHUB_REPO = "github.com/okt-limonikas/bublik-log-viewer"
+const BinName = "bublik-log-viewer"
+const BuildPath = "build"
+const GithubRepo = "github.com/okt-limonikas/bublik-log-viewer"
 
 var Version = "dev"
 var Commit = "none"

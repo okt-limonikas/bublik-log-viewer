@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// https://stackoverflow.com/questions/39320371/how-start-web-server-to-open-page-in-browser-in-golang
+// OpenURL https://stackoverflow.com/questions/39320371/how-start-web-server-to-open-page-in-browser-in-golang
 // openURL opens the specified URL in the default browser of the user.
 func OpenURL(url string) error {
 	var cmd string
