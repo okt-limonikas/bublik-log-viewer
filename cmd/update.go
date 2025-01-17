@@ -50,7 +50,6 @@ func readLastUpdateTime() (time.Time, error) {
 	if _, err := os.Stat(constants.LastUpdateFile); os.IsNotExist(err) {
 		// Create the file if it doesn't exist
 		err := os.WriteFile(constants.LastUpdateFile, []byte(time.Now().Format(time.RFC3339)), 0644)
-
 		if err != nil {
 			return time.Now(), fmt.Errorf("failed to create last update time file: %w", err)
 		}
@@ -82,7 +81,7 @@ func checkForUpdateScheduled() error {
 		return nil
 	}
 
-	versions, err := getVerions()
+	versions, err := getVersions()
 	if err != nil {
 		return fmt.Errorf("failed to get versions %w", err)
 	}
@@ -92,7 +91,7 @@ func checkForUpdateScheduled() error {
 		return fmt.Errorf("failed to update last update time: %w", err)
 	}
 
-	var style = lipgloss.NewStyle().
+	style := lipgloss.NewStyle().
 		Bold(true).
 		Foreground(lipgloss.AdaptiveColor{Light: "#874BFD", Dark: "#7D56F4"}).
 		Padding(1).Border(lipgloss.NormalBorder())
@@ -118,7 +117,7 @@ type Versions struct {
 	latest  *semver.Version
 }
 
-func getVerions() (*Versions, error) {
+func getVersions() (*Versions, error) {
 	latestVersion, err := updateManager.GetLatestVersion()
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch latest version: %w", err)
@@ -131,7 +130,7 @@ func getVerions() (*Versions, error) {
 
 	currentVersion, err := semver.NewVersion(constants.Version)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create current version struct: %w", err)
+		currentVersion, _ = semver.NewVersion("0.0.0")
 	}
 
 	return &Versions{current: currentVersion, latest: latestVersionSem}, nil
@@ -155,7 +154,7 @@ func performUpdate() error {
 	}
 	log.Printf("Latest version: %s", latestVersion)
 
-	versions, err := getVerions()
+	versions, err := getVersions()
 	if err != nil {
 		return fmt.Errorf("failed to create versions struct %w", err)
 	}
