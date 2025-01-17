@@ -6,13 +6,17 @@ import (
 	"time"
 )
 
-const BinName = "bublik-log-viewer"
-const BuildPath = "build"
-const GithubRepo = "github.com/okt-limonikas/bublik-log-viewer"
+const (
+	BinName    = "bublik-log-viewer"
+	BuildPath  = "build"
+	GithubRepo = "github.com/okt-limonikas/bublik-log-viewer"
+)
 
-var Version = "dev"
-var Commit = "none"
-var Date = "unknown"
+var (
+	Version = "dev"
+	Commit  = "none"
+	Date    = "unknown"
+)
 
 const UpdateInterval = time.Hour * 6
 
