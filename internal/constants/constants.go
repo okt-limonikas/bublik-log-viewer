@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	BinName    = "bublik-log-viewer"
+	BinName    = "blv"
 	BuildPath  = "build"
 	GithubRepo = "github.com/okt-limonikas/bublik-log-viewer"
 )
@@ -30,5 +30,5 @@ func init() {
 
 	homeDir := currentUser.HomeDir
 
-	LastUpdateFile = filepath.Join(homeDir, ".last_update.txt")
+	LastUpdateFile = filepath.Join(homeDir, ".blv_last_update.txt")
 }
