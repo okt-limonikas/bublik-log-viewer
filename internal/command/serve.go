@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"io/fs"
-	"log"
+	"log/slog"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -41,7 +41,7 @@ var serveLogsCmd = &cobra.Command{
 
 		err := checkForUpdateScheduled()
 		if err != nil {
-			log.Println(err)
+			slog.Error("error checking for update scheduled", "error", err)
 		}
 
 		serveLogs(&input)
@@ -71,11 +71,13 @@ func createLogHandler(pathOrUrl string, isRemote bool) http.Handler {
 	if isRemote {
 		parsedUrl, err := url.Parse(pathOrUrl)
 		if err != nil {
-			log.Fatal("Failed to parse URL")
+			slog.Error("failed to parse URL", "error", err)
+			os.Exit(1)
 		}
 
 		if !strings.HasPrefix(parsedUrl.Scheme, "http://") && !strings.HasPrefix(parsedUrl.Scheme, "https://") {
-			log.Fatal("Not supported URL scheme")
+			slog.Error("not supported URL scheme")
+			os.Exit(1)
 		}
 
 		handleJsonLogs = httputil.NewSingleHostReverseProxy(parsedUrl)
@@ -95,7 +97,8 @@ func resolvePath(pathOrUrl string, isRemote bool) string {
 	} else {
 		path, err := filepath.Abs(pathOrUrl)
 		if err != nil {
-			log.Fatal("Error getting absolute path of log directory:", err)
+			slog.Error("error getting absolute path of log directory", "error", err)
+			os.Exit(1)
 		}
 
 		resolvedPath = path
@@ -111,7 +114,7 @@ func maybeOpenBrowser(url string, shouldOpenBrowser bool) {
 
 	err := utils.OpenURL(url)
 	if err != nil {
-		log.Printf("Failed to open browser!")
+		slog.Warn("failed to open browser", "error", err)
 	}
 }
 
@@ -121,14 +124,15 @@ func serveLogs(input *LogsInput) {
 	http.Handle("/json/", createLogHandler(input.path, input.isRemote))
 	http.HandleFunc("/", handleSPA)
 
-	log.Printf("The server is listening at %s", resolvedUrl)
-	log.Printf("Serving log files from %s", resolvePath(input.path, input.isRemote))
+	slog.Info("server listening", "url", resolvedUrl)
+	slog.Info("serving log files", "path", resolvePath(input.path, input.isRemote))
 
 	maybeOpenBrowser(resolvedUrl, input.shouldOpenBrowser)
 
 	err := http.ListenAndServe(fmt.Sprintf("%s:%s", input.host, input.port), nil)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("server failed to start", "error", err)
+		os.Exit(1)
 	}
 }
 

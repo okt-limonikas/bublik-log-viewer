@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"runtime"
 	"time"
@@ -21,12 +21,12 @@ var updateCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		err := performUpdate()
 		if err != nil {
-			log.Fatal(err)
+			slog.Error("update failed", "error", err)
 		}
 
 		err = updateLastUpdateTime()
 		if err != nil {
-			log.Fatal("Failed to update last update file")
+			slog.Error("failed to update last update file", "error", err)
 		}
 	},
 }
@@ -77,7 +77,7 @@ func checkForUpdateScheduled() error {
 
 	// If the last update check was less than UpdateInterval ago, do not check again
 	if time.Since(lastUpdate) < constants.UpdateInterval {
-		log.Println("Update check skipped. Minimum update interval not reached.")
+		slog.Info("update check skipped - minimum update interval not reached")
 		return nil
 	}
 
@@ -141,18 +141,19 @@ func shouldUpdate(current *semver.Version, latest *semver.Version) bool {
 }
 
 func performUpdate() error {
-	log.Println("Starting update process...")
+	slog.Info("starting update process...")
 
-	log.Printf("Version: %s", constants.Version)
-	log.Printf("Commit: %s", constants.Commit)
-	log.Printf("Date: %s", constants.Date)
+	slog.Info("current version info",
+		"version", constants.Version,
+		"commit", constants.Commit,
+		"date", constants.Date)
 
-	log.Println("Checking latest version...")
+	slog.Info("checking latest version...")
 	latestVersion, err := updateManager.GetLatestVersion()
 	if err != nil {
 		return err
 	}
-	log.Printf("Latest version: %s", latestVersion)
+	slog.Info("latest version found", "version", latestVersion)
 
 	versions, err := getVersions()
 	if err != nil {
@@ -160,17 +161,17 @@ func performUpdate() error {
 	}
 
 	if !shouldUpdate(versions.current, versions.latest) {
-		log.Println("You are already on latest version...")
+		slog.Info("already on latest version")
 		return nil
 	}
 
-	log.Printf("Loading \"%s\"", archiveName)
+	slog.Info("downloading update", "archive", archiveName)
 	_, err = updateManager.Update()
 	if err != nil {
 		return err
 	}
 
-	log.Printf("Succesfully updated to %s", latestVersion)
+	slog.Info("update successful", "version", latestVersion)
 
 	return nil
 }

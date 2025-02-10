@@ -2,7 +2,8 @@ package command
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
+	"os"
 
 	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
 	"github.com/spf13/cobra"
@@ -21,8 +22,13 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	// Set up structured logging
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	slog.SetDefault(logger)
+
 	err := rootCmd.Execute()
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("command execution failed", "error", err)
+		os.Exit(1)
 	}
 }

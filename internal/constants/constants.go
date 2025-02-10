@@ -1,9 +1,12 @@
 package constants
 
 import (
+	"os"
 	"os/user"
 	"path/filepath"
 	"time"
+
+	"log/slog"
 )
 
 const (
@@ -25,10 +28,10 @@ var LastUpdateFile string
 func init() {
 	currentUser, err := user.Current()
 	if err != nil {
-		panic(err)
+		slog.Error("failed to get current user", "error", err)
+		os.Exit(1)
 	}
 
 	homeDir := currentUser.HomeDir
-
 	LastUpdateFile = filepath.Join(homeDir, ".blv_last_update.txt")
 }
