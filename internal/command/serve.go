@@ -9,7 +9,6 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/okt-limonikas/bublik-log-viewer/frontend"
 	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
@@ -75,7 +74,7 @@ func createLogHandler(pathOrUrl string, isRemote bool) http.Handler {
 			os.Exit(1)
 		}
 
-		if !strings.HasPrefix(parsedUrl.Scheme, "http://") && !strings.HasPrefix(parsedUrl.Scheme, "https://") {
+		if parsedUrl.Scheme != "http" && parsedUrl.Scheme != "https" {
 			slog.Error("not supported URL scheme")
 			os.Exit(1)
 		}
