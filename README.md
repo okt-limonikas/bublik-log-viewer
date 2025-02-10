@@ -4,7 +4,7 @@
 
 1. Make sure you installed go https://go.dev/doc/install
 2. Install `go install github.com/okt-limonikas/bublik-log-viewer@latest`
-3. Run `bublik-log-viewer --help` to get started
+3. Run `blv --help` to get started
 
 This will install binary to `$GOPATH`
 
