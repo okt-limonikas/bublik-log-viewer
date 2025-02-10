@@ -16,14 +16,14 @@ if [ "$arch" = "aarch64" ]; then
 fi  
 
 if [ $# -eq 0 ]; then 	
-	download_uri="https://github.com/okt-limonikas/bublik-log-viewer/releases/latest/download/bublik-log-viewer_${os}_${arch}.tar.gz"
+	download_uri="https://github.com/okt-limonikas/bublik-log-viewer/releases/latest/download/blv_${os}_${arch}.tar.gz"
 else 	
-	download_uri="https://github.com/okt-limonikas/bublik-log-viewer/releases/download/${1}/bublik-log-viewer_${os}_${arch}.tar.gz"
+	download_uri="https://github.com/okt-limonikas/bublik-log-viewer/releases/download/${1}/blv_${os}_${arch}.tar.gz"
 fi  
 
 log_install="${LOG_INSTALL:-${HOME}/.local}"
 bin_dir="${log_install}/bin"
-exe="${bin_dir}/bublik-log-viewer"
+exe="${bin_dir}/blv"
 
 echo "Bin directory is: ${bin_dir}"
 
@@ -32,15 +32,15 @@ if [ ! -d "${bin_dir}" ]; then
 fi  
 
 echo "Downloading Bublik log viewer from: $download_uri"
-curl --silent --show-error --location --fail --location --output "${bin_dir}/bublik-log-viewer.tar.gz" "$download_uri"
+curl --silent --show-error --location --fail --location --output "${bin_dir}/blv.tar.gz" "$download_uri"
 
 echo "Extracting Bublik log viewer..."
-tar -xzf "${bin_dir}/bublik-log-viewer.tar.gz" -C "${bin_dir}/"
+tar -xzf "${bin_dir}/blv.tar.gz" -C "${bin_dir}/"
 
 chmod +x "${exe}"
 
-echo "Cleaning up downloaded archive ${bin_dir}/bublik-log-viewer.tar.gz"
-rm "${bin_dir}/bublik-log-viewer.tar.gz"
+echo "Cleaning up downloaded archive ${bin_dir}/blv.tar.gz"
+rm "${bin_dir}/blv.tar.gz"
 
 echo "Bublik log viewer was installed successfully to ${exe}"
 
