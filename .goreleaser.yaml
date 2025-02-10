@@ -7,29 +7,26 @@ before:
     - go generate ./...
 
 builds:
-  - binary: "{{ .ProjectName }}"
+  - binary: "blv"
+    main: ./cmd/main.go
     env:
       - CGO_ENABLED=0
     goos:
       - linux
       - darwin
     ldflags:
-      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/constants.Version={{.Version}}"
-      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/constants.Commit={{.Commit}}"
-      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/constants.Date={{.Date}}"
+      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/internal/constants.Version={{.Version}}"
+      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/internal/constants.Commit={{.Commit}}"
+      - -s -w -X "github.com/okt-limonikas/bublik-log-viewer/internal/constants.Date={{.Date}}"
 
 archives:
-  - format: tar.gz
-    name_template: >-
-      {{ .ProjectName }}_
+  - name_template: >-
+      {{ .blv }}_
       {{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    format_overrides:
-      - goos: windows
-        format: zip
     files:
       - README*
       - LICENSE*
@@ -41,6 +38,8 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
+
+force_token: github
 
 # New recommended sections for version 2
 report_sizes: true

@@ -1,4 +1,4 @@
-package cmd
+package command
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/mouuff/go-rocket-update/pkg/provider"
 	"github.com/mouuff/go-rocket-update/pkg/updater"
-	"github.com/okt-limonikas/bublik-log-viewer/constants"
+	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
 	"github.com/spf13/cobra"
 )
 

@@ -1,9 +1,10 @@
-package cmd
+package command
 
 import (
-	"github.com/okt-limonikas/bublik-log-viewer/constants"
-	"github.com/spf13/cobra"
 	"log"
+
+	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
+	"github.com/spf13/cobra"
 )
 
 func init() {

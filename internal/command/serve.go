@@ -1,4 +1,4 @@
-package cmd
+package command
 
 import (
 	"fmt"
@@ -11,9 +11,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/okt-limonikas/bublik-log-viewer/constants"
 	"github.com/okt-limonikas/bublik-log-viewer/frontend"
-	"github.com/okt-limonikas/bublik-log-viewer/utils"
+	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
+	"github.com/okt-limonikas/bublik-log-viewer/internal/utils"
 	"github.com/spf13/cobra"
 )
 

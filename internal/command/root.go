@@ -1,10 +1,10 @@
-package cmd
+package command
 
 import (
 	"fmt"
 	"log"
 
-	"github.com/okt-limonikas/bublik-log-viewer/constants"
+	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
 	"github.com/spf13/cobra"
 )
 
