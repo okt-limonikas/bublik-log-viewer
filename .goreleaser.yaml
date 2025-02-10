@@ -47,9 +47,9 @@ source:
   enabled: true
 
 # Adding release signing (optional but recommended)
-signs:
-  - cmd: gpg
-    artifacts: checksum
+# signs:
+#   - cmd: gpg
+#     artifacts: checksum
 
 # Adding checksum generation
 checksum:
