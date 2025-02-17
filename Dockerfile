@@ -8,16 +8,17 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o app ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o app ./cmd/blv/main.go
 
 FROM alpine:latest
 
 WORKDIR /root/
 
-RUN mkdir json
+RUN mkdir -p /root/json
 
-COPY --from=builder /app/app .
+COPY --from=builder /app/app /usr/local/bin/blv
 
 EXPOSE 5050
 
-CMD ["./app", "serve", "./json", "--host", "0.0.0.0"]
+ENTRYPOINT ["blv"]
+CMD ["serve", "/root/json", "--host", "0.0.0.0"]
