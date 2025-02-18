@@ -21,4 +21,4 @@ COPY --from=builder /app/app /usr/local/bin/blv
 EXPOSE 5050
 
 ENTRYPOINT ["blv"]
-CMD ["serve", "/root/json", "--host", "0.0.0.0"]
+CMD ["serve", "/root/json"]
