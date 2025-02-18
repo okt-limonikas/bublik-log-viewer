@@ -50,7 +50,7 @@ var serveLogsCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(serveLogsCmd)
 
-	serveLogsCmd.Flags().StringVar(&host, "host", "127.0.0.1", "Host address")
+	serveLogsCmd.Flags().StringVar(&host, "host", "0.0.0.0", "Host address")
 	serveLogsCmd.Flags().StringVar(&port, "port", "5050", "Port number")
 	serveLogsCmd.Flags().BoolVar(&shouldOpenBrowser, "open", true, "Should open browser")
 	serveLogsCmd.Flags().BoolVar(&isRemote, "remote", false, "Serve remote logs")
@@ -119,12 +119,22 @@ func maybeOpenBrowser(url string, shouldOpenBrowser bool) {
 
 func serveLogs(input *LogsInput) {
 	resolvedUrl := fmt.Sprintf("http://%s:%s", input.host, input.port)
+	resolvedPath := resolvePath(input.path, input.isRemote)
 
 	http.Handle("/json/", createLogHandler(input.path, input.isRemote))
 	http.HandleFunc("/", handleSPA)
 
-	slog.Info("server listening", "url", resolvedUrl)
-	slog.Info("serving log files", "path", resolvePath(input.path, input.isRemote))
+	fmt.Println("╭──────────────────────────────────────────")
+	fmt.Println("│ 🚀 Bublik Log Viewer is running!")
+	fmt.Println("│")
+	if input.isRemote {
+		fmt.Printf("│ 📡 Remote logs URL: %s\n", resolvedPath)
+	} else {
+		fmt.Printf("│ 📂 Local logs path: %s\n", resolvedPath)
+	}
+	fmt.Println("│")
+	fmt.Printf("│ 🌐 Web interface: %s\n", resolvedUrl)
+	fmt.Println("╰──────────────────────────────────────────")
 
 	maybeOpenBrowser(resolvedUrl, input.shouldOpenBrowser)
 

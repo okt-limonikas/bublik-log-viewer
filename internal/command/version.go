@@ -1,7 +1,7 @@
 package command
 
 import (
-	"log/slog"
+	"fmt"
 
 	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
 	"github.com/spf13/cobra"
@@ -16,9 +16,12 @@ var versionCmd = &cobra.Command{
 	Short: "Print current version information",
 	Long:  "Print current version of binary",
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.Info("version information",
-			"version", constants.Version,
-			"date", constants.Date,
-			"commit", constants.Commit)
+		fmt.Println("╭──────────────────────────────────────────")
+		fmt.Println("│ 📦 Bublik Log Viewer")
+		fmt.Println("│")
+		fmt.Printf("│ 🔖 Version: %s\n", constants.Version)
+		fmt.Printf("│ 📅 Build date: %s\n", constants.Date)
+		fmt.Printf("│ 🔨 Commit: %s\n", constants.Commit)
+		fmt.Println("╰──────────────────────────────────────────")
 	},
 }

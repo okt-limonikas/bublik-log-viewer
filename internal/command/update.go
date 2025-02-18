@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/Masterminds/semver"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/mouuff/go-rocket-update/pkg/provider"
 	"github.com/mouuff/go-rocket-update/pkg/updater"
 	"github.com/okt-limonikas/bublik-log-viewer/internal/constants"
@@ -16,7 +15,7 @@ import (
 )
 
 var updateCmd = &cobra.Command{
-	Use:   "update",
+	Use:   "self-update",
 	Short: "Update to latest version",
 	Run: func(cmd *cobra.Command, args []string) {
 		err := performUpdate()
@@ -91,14 +90,16 @@ func checkForUpdateScheduled() error {
 		return fmt.Errorf("failed to update last update time: %w", err)
 	}
 
-	style := lipgloss.NewStyle().
-		Bold(true).
-		Foreground(lipgloss.AdaptiveColor{Light: "#874BFD", Dark: "#7D56F4"}).
-		Padding(1).Border(lipgloss.NormalBorder())
-
 	if shouldUpdate(versions.current, versions.latest) {
-		message := fmt.Sprintf("New version available: v%s\nYou can update: `bublik-log-viewer update`", versions.latest.String())
-		fmt.Println(style.Render(message))
+		fmt.Println("╭──────────────────────────────────────────")
+		fmt.Println("│ 🆕 Update Available!")
+		fmt.Println("│")
+		fmt.Printf("│ 📦 Current version: v%s\n", versions.current)
+		fmt.Printf("│ ⭐ Latest version: v%s\n", versions.latest)
+		fmt.Println("│")
+		fmt.Println("│ 💡 To update, run:")
+		fmt.Println("│    blv self-update")
+		fmt.Println("╰──────────────────────────────────────────")
 	}
 
 	return nil
@@ -141,19 +142,20 @@ func shouldUpdate(current *semver.Version, latest *semver.Version) bool {
 }
 
 func performUpdate() error {
-	slog.Info("starting update process...")
+	fmt.Println("╭──────────────────────────────────────────")
+	fmt.Println("│ 🔄 Starting Update Process")
+	fmt.Println("│")
+	fmt.Printf("│ 📦 Current version: v%s\n", constants.Version)
+	fmt.Printf("│ 📅 Build date: %s\n", constants.Date)
+	fmt.Printf("│ 🔨 Commit: %s\n", constants.Commit)
+	fmt.Println("│")
+	fmt.Println("│ 🔍 Checking latest version...")
 
-	slog.Info("current version info",
-		"version", constants.Version,
-		"commit", constants.Commit,
-		"date", constants.Date)
-
-	slog.Info("checking latest version...")
 	latestVersion, err := updateManager.GetLatestVersion()
 	if err != nil {
 		return err
 	}
-	slog.Info("latest version found", "version", latestVersion)
+	fmt.Printf("│ ✨ Latest version found: v%s\n", latestVersion)
 
 	versions, err := getVersions()
 	if err != nil {
@@ -161,17 +163,22 @@ func performUpdate() error {
 	}
 
 	if !shouldUpdate(versions.current, versions.latest) {
-		slog.Info("already on latest version")
+		fmt.Println("│")
+		fmt.Println("│ ✅ You're already on the latest version!")
+		fmt.Println("╰──────────────────────────────────────────")
 		return nil
 	}
 
-	slog.Info("downloading update", "archive", archiveName)
+	fmt.Println("│")
+	fmt.Printf("│ 📥 Downloading update (%s)...\n", archiveName)
 	_, err = updateManager.Update()
 	if err != nil {
 		return err
 	}
 
-	slog.Info("update successful", "version", latestVersion)
+	fmt.Println("│")
+	fmt.Printf("│ 🎉 Update successful! Now running v%s\n", latestVersion)
+	fmt.Println("╰──────────────────────────────────────────")
 
 	return nil
 }
