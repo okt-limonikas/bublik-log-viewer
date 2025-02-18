@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: Checkout Frontend
         uses: actions/checkout@v4
@@ -57,6 +60,13 @@ jobs:
           default_author: github_actions
           push: true
 
+      - name: Update Tag
+        run: |
+          git tag -d ${{ github.ref_name }}
+          git push origin :refs/tags/${{ github.ref_name }}
+          git tag ${{ github.ref_name }}
+          git push origin ${{ github.ref_name }}
+
       - name: Set Up Go
         uses: actions/setup-go@v5.3.0
         with:
@@ -79,6 +89,8 @@ jobs:
     steps:
       - name: Initial Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Docker Meta
         id: meta
@@ -91,7 +103,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Clean workspace
+      - name: Clean Workspace
         run: |
           rm -rf *
           rm -rf .git
@@ -99,11 +111,8 @@ jobs:
       - name: Full Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          ref: main
           fetch-depth: 0
-
-      - name: Pull Latest Changes
-        run: git pull origin ${{ github.ref_name }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
