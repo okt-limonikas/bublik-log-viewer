@@ -155,7 +155,7 @@ func performUpdate() error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("│ ✨ Latest version found: v%s\n", latestVersion)
+	fmt.Printf("│ ✨ Latest version found: %s\n", latestVersion)
 
 	versions, err := getVersions()
 	if err != nil {
