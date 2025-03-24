@@ -19,8 +19,8 @@ var artifactSchema string
 
 var validateArtifactsCmd = &cobra.Command{
 	Use:   "validate",
-	Short: "Validate files",
-	Long:  "Validate different types of files (artifacts)",
+	Short: "Validate different types of files",
+	Long:  "Validate different types of files (artifacts, etc.)",
 	Run: func(cmd *cobra.Command, args []string) {
 		validateType, _ := cmd.Flags().GetString("type")
 		if len(args) == 0 {
@@ -37,6 +37,7 @@ var validateArtifactsCmd = &cobra.Command{
 			fmt.Println("Artifacts validation completed successfully")
 		} else {
 			fmt.Printf("Error: Unsupported validation type: %s\n", validateType)
+			fmt.Println("Supported types: artifacts")
 			os.Exit(1)
 		}
 	},
