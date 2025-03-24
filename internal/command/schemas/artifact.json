@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "description": "version of artifacts.json"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "text",
+                "description": "type of artifact"
+              },
+              "view_type": {
+                "type": "string",
+                "const": "inline",
+                "description": "inline means open in new browser tab"
+              },
+              "name": {
+                "type": "string",
+                "description": "name of artifact"
+              },
+              "description": {
+                "type": "string",
+                "description": "optional description of artifact"
+              },
+              "download_enabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "should show button to download artifact"
+              },
+              "path": {
+                "type": "string",
+                "description": "path of artifact relative to artifacts.json"
+              },
+              "uri": {
+                "type": "string",
+                "description": "uri of artifact, if it is not relative to artifacts.json or external"
+              }
+            },
+            "required": [
+              "type",
+              "view_type",
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "description": "list of artifacts"
+    }
+  },
+  "required": [
+    "version",
+    "artifacts"
+  ],
+  "additionalProperties": false,
+  "description": "artifacts.json schema",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
