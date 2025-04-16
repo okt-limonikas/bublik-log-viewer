@@ -5,7 +5,7 @@
       "type": "number",
       "description": "version of artifacts.json"
     },
-    "artifacts": {
+    "attachments": {
       "type": "array",
       "items": {
         "anyOf": [
@@ -44,11 +44,7 @@
                 "description": "uri of artifact, if it is not relative to artifacts.json or external"
               }
             },
-            "required": [
-              "type",
-              "view_type",
-              "name"
-            ],
+            "required": ["type", "view_type", "name"],
             "additionalProperties": false
           }
         ]
@@ -56,11 +52,9 @@
       "description": "list of artifacts"
     }
   },
-  "required": [
-    "version",
-    "artifacts"
-  ],
+  "required": ["version", "artifacts"],
   "additionalProperties": false,
-  "description": "artifacts.json schema",
+  "description": "attachments.json schema",
   "$schema": "http://json-schema.org/draft-07/schema#"
 }
+
