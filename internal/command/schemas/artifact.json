@@ -3,7 +3,7 @@
   "properties": {
     "version": {
       "type": "number",
-      "description": "version of artifacts.json"
+      "description": "version of attachments.json"
     },
     "attachments": {
       "type": "array",
@@ -15,7 +15,7 @@
               "type": {
                 "type": "string",
                 "const": "text",
-                "description": "type of artifact"
+                "description": "type of attachment"
               },
               "view_type": {
                 "type": "string",
@@ -24,24 +24,24 @@
               },
               "name": {
                 "type": "string",
-                "description": "name of artifact"
+                "description": "name of attachment"
               },
               "description": {
                 "type": "string",
-                "description": "optional description of artifact"
+                "description": "optional description of attachment"
               },
               "download_enabled": {
                 "type": "boolean",
                 "default": false,
-                "description": "should show button to download artifact"
+                "description": "should show button to download attachment"
               },
               "path": {
                 "type": "string",
-                "description": "path of artifact relative to artifacts.json"
+                "description": "path of attachment relative to attachments.json"
               },
               "uri": {
                 "type": "string",
-                "description": "uri of artifact, if it is not relative to artifacts.json or external"
+                "description": "uri of attachment, if it is not relative to attachments.json or external"
               }
             },
             "required": ["type", "view_type", "name"],
@@ -49,12 +49,11 @@
           }
         ]
       },
-      "description": "list of artifacts"
+      "description": "list of attachments"
     }
   },
-  "required": ["version", "artifacts"],
+  "required": ["version", "attachments"],
   "additionalProperties": false,
   "description": "attachments.json schema",
   "$schema": "http://json-schema.org/draft-07/schema#"
 }
-
