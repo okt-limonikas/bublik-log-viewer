@@ -46,6 +46,44 @@
             },
             "required": ["type", "view_type", "name"],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "packet-capture",
+                "description": "type of attachment"
+              },
+              "view_type": {
+                "type": "string",
+                "const": "bublik-tools/net-packet-analyzer",
+                "description": "view with network packet analyzer tool"
+              },
+              "name": {
+                "type": "string",
+                "description": "name of attachment"
+              },
+              "description": {
+                "type": "string",
+                "description": "optional description of attachment"
+              },
+              "download_enabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "should show button to download attachment"
+              },
+              "path": {
+                "type": "string",
+                "description": "path of attachment relative to attachments.json"
+              },
+              "uri": {
+                "type": "string",
+                "description": "uri of attachment, if it is not relative to attachments.json or external"
+              }
+            },
+            "required": ["type", "view_type", "name"],
+            "additionalProperties": false
           }
         ]
       },
